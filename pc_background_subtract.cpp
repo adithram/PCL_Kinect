@@ -8,6 +8,8 @@
 #include <stdlib.h> 
 #include <cmath>
 
+#include "pc_background_subtract.h"
+
 using namespace std;
 
  /*
@@ -18,6 +20,8 @@ using namespace std;
  // Extract clusters
   
  */
+
+namespace BackgroundSubtract{ 
 
 // Function to randomly initialize base pointcloud
 void initiailzeBaseCloud(pcl::PointCloud<pcl::PointXYZ> &base_cloud){
@@ -45,7 +49,7 @@ void initiailzeBaseCloud(pcl::PointCloud<pcl::PointXYZ> &base_cloud){
   cout << "Saved " << base_cloud.points.size () << " data points to base_pcd.pcd." << std::endl;
 
   // Write base_cloud to terminal
-  cout << "x" << " " << "y" << " " << "z" << endl; // I know this could be one line, but this is easier to read for me. ("aka i have autism" - bhiarva)
+  cout << "x" << " " << "y" << " " << "z" << endl; // I know this could be one line, but this is easier to read for me. 
   for (size_t i = 0; i < base_cloud.points.size (); ++i){
     cout << " " << base_cloud.points[i].x << " " << base_cloud.points[i].y << " " << base_cloud.points[i].z << endl;
   }
@@ -123,46 +127,5 @@ int main (int argc, char** argv){
   return (0);
 }
 
-/* 
-// No need for this code but keeping for reference
+} // namespace BackgroundSubtract
 
-//Perform background subtraction between base_cloud and compare_cloud.
-  
-// Vector that contains the differences between specific points.
-vector<boost::tuple<double, double, double> > dif_points;
-
-for (size_t i = 0; i < base_cloud.size(); ++i){
-      double z = fabs(base_cloud.points[i].z - compare_cloud.points[i].z);
-  
-      //Construct tuple
-      double x = base_cloud.points[i].x;
-      double y = base_cloud.points[i].y;
-      boost::tuple<double, double, double> point (x, y, z);
-    
-      //Add to vector
-      dif_points.push_back(point);
-}
-
-// vector that contains the points that serve as locations for obstacles.
-vector<pair<double, double> > obstacle_locations; 
-
-for ( unsigned int i = 0; i < dif_points.size(); ++i){
-  // Define threshold for z value
-  if( get<2>(dif_points[i]) > .5){
-    double x = get<0>(dif_points[i]);
-    double y = get<1>(dif_points[i]);
-    pair<double, double> point (x,y);
-    obstacle_locations.push_back(point);
-  }
-}
-
-//--------------------------------------------------------------------------------------------------------------------------------------------
-// TODO: EXTRACT CLUSTERS
-//--------------------------------------------------------------------------------------------------------------------------------------------
-
-// Publish the points when integrating to ROS. For now, printint to stdout.
-for (unsigned int i = 0; i < obstacle_locations.size(); ++i){
-  cout << "Obstacle at: (" << obstacle_locations[i].first << ", " << obstacle_locations[i].second << ")" << endl;
-}
-
-*/ 
