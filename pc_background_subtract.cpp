@@ -78,7 +78,31 @@ namespace BackgroundSubtract{
 
   // function to smooth cloud to fill in depth uncertainties
   void smoothCloud(pcl::PointCloud<pcl::PointXYZ> &compare_cloud){
-    return;
+      // Create a KD-Tree
+    pcl::search::KdTree<pcl::PointXYZ>::Ptr tree (new pcl::search::KdTree<pcl::PointXYZ>);
+
+    // Output has the PointNormal type in order to store the normals calculated by MLS
+    pcl::PointCloud<pcl::PointNormal> mls_points;
+
+    // Init object (second point type is for the normals, even if unused)
+    pcl::MovingLeastSquares<pcl::PointXYZ, pcl::PointNormal> mls;
+   
+    mls.setComputeNormals (true);
+
+    // Set parameters
+    mls.setInputCloud (compare_cloud);
+    mls.setPolynomialFit (true);
+    mls.setSearchMethod (tree);
+    //test this parameter
+    mls.setSearchRadius (0.03);
+
+    // Reconstruct
+    mls.process (mls_points);
+
+    //"if the normals and the original dimensions need to be in the same cloud, the fields have to be concatenated."
+    // I think this is the way to add back in the calculated normals. Needs to be tested.
+    // Possibly rewritten. 
+    compare_cloud = compare_cloud + mls_points;
   }
 
   // function to group, extract clusters from an input point cloud
