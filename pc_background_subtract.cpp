@@ -78,7 +78,8 @@ namespace BackgroundSubtract{
 
   // function to smooth cloud to fill in depth uncertainties
   void smoothCloud(pcl::PointCloud<pcl::PointXYZ> &compare_cloud){
-      // Create a KD-Tree
+    
+    // Create a KD-Tree
     pcl::search::KdTree<pcl::PointXYZ>::Ptr tree (new pcl::search::KdTree<pcl::PointXYZ>);
 
     // Output has the PointNormal type in order to store the normals calculated by MLS
