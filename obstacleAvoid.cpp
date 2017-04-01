@@ -9,6 +9,8 @@
 #include <cmath>
 
 #include "pc_background_subtract.h"
+#include <"obstacle.h">
+
 
 using namespace std;
 
@@ -39,10 +41,14 @@ namespace BackgroundSubtract{
         // Smoothing kernel on point cloud
         smoothCloud(compare_cloud);
 
-        // extract clusters: http://www.pointclouds.org/documentation/tutorials/cluster_extraction.php
-        // return in a vector format?
-        extractClustersFromCloud(compare_cloud);
+        // Extract clusters ; return vector containing cluster locations
+        vector< pcl::PointCloud<pcl::PointXYZ> * > cluster_clouds;
+        cluster_clouds = extractClustersFromCloud(compare_cloud);
 
+        vector<Obstacle> obstacles_vector;
+        obstacles_vector = extractAverages(cluster_clouds);
+
+        //publish the vector
 
         // Slow down data rate
         this_thread::sleep_for(chrono::seconds(2)); 

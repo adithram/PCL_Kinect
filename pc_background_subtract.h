@@ -2,6 +2,7 @@
 #define PC_BACKGROUND_SUBTRACT_H
 
 #include <pcl/point_types.h>
+#include <"obstacle.h">
 
 namespace BackgroundSubtract {
     
@@ -17,7 +18,12 @@ void compareClouds(pcl::PointCloud<pcl::PointXYZ> &base_cloud,
 
 void smoothCloud(pcl::PointCloud<pcl::PointXYZ> &compare_cloud);
 
-void extractClustersFromCloud(pcl::PointCloud<pcl::PointXYZ> &compare_cloud);
+vector< pcl::PointCloud<pcl::PointXYZ> * > extractClustersFromCloud(pcl::PointCloud<pcl::PointXYZ> &compare_cloud);
+
+// function that averages values in pointcloud, returns vector of average location (x,y, length and width)
+// Should return average x, y, length, and width (approximate) of obstacles (the cluster)
+// values contained in obstacle object
+vector<Obstacle> extractAverages(vector< pcl::PointCloud<pcl::PointXYZ> * > cluster_clouds);
 
 } // namespace BackgroundSubtract
 
