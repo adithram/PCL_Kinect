@@ -9,9 +9,9 @@ Obstacle::Obstacle(){
 	height = -1;
 }
 
-Obstacle::Obstacle(int x_in, int y_in, int width_in, int height_in){
+Obstacle::Obstacle(int x_in, int y_in, int width_in, int length_in){
 	x = x_in;
 	y = y_in;
 	width = width_in;
-	height = height_in;
+	length = height_in;
 }

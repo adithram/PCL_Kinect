@@ -145,8 +145,69 @@ namespace BackgroundSubtract{
   // values contained in obstacle object
   vector<Obstacle> extractAverages(vector< pcl::PointCloud<pcl::PointXYZ> * > cluster_clouds){
     vector<Obstacle> obstacles_vector;
+
+    //Iterate through all of the cluster clouds
+    for (auto current_cloud: cluster_clouds) {
+      double x_min = current_cloud->points[0].x;
+      double y_min = current_cloud->points[0].y;
+      double x_max = current_cloud->points[0].x;
+      double y_max = current_cloud->points[0].y;
+      double x_total = 0;
+      double y_total = 0;
+      int count = 0;
+
+      //iterate through points in current cloud
+      for(size_t i = 0; i < current_cloud->size(); ++i){
+        // Reset min if needed
+        if(current_cloud->points[i].x < x_min){
+          x_min = current_cloud->points[i].x;
+        }
+        if(current_cloud->points[i].y < y_min){
+          y_min = current_cloud->points[i].y;
+        }
+        //Reset max if needed
+        if(current_cloud->points[i].x > x_max){
+          x_max = current_cloud->points[i].x;
+        }
+        if(current_cloud->points[i].y > y_max){
+          y_max = current_cloud->points[i].y;
+        }
+
+        //Add into total; increment count
+        x_total += current_cloud->points[i].x;
+        y_total += current_cloud->points[i].y;
+        count++;
+      }
+
+      // Create obstacle object with relative date & push
+      double x_avg = x_total / count;
+      double y_avg = y_total / count;
+      double width = x_max - x_min;
+      double length = y_max - y_min;
+      Obstacle currentObstacle(x_avg, y_avg, width, length);
+      obstacles_vector.push_back(currentObstacle);
+
+
+    }
+
+
     return obstacles_vector;
+  } //closing the averages function
+
+  //Temperorary function that writes values to the terminal
+  void terminalWrite(vector<Obstacle> &obstacles_vector){
+    int count = 0;
+    for(auto i: obstacles_vector){
+      double x = i.x;
+      double y = i.y;
+      double width = i.width;
+      double length = i.length;
+
+      cout << "Obstacle number " << count << " located at (" << x << "," << y <<"), with width: " << width << " and length: " << length << endl; 
+      count++;
+    }
   }
+
 
 
 } // Closing namespace

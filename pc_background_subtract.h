@@ -23,8 +23,13 @@ vector< pcl::PointCloud<pcl::PointXYZ> * > extractClustersFromCloud(pcl::PointCl
 // function that averages values in pointcloud, returns vector of average location (x,y, length and width)
 // Should return average x, y, length, and width (approximate) of obstacles (the cluster)
 // values contained in obstacle object
-vector<Obstacle> extractAverages(vector< pcl::PointCloud<pcl::PointXYZ> * > cluster_clouds);
+vector<Obstacle> extractAverages(vector< pcl::PointCloud<pcl::PointXYZ> * > &cluster_clouds);
+
+//Temperorary function that writes values to the terminal
+void terminalWrite(vector<Obstacle> &obstacles_vector);
+	
 
 } // namespace BackgroundSubtract
+
 
 #endif // PC_BACKGROUND_SUBTRACT_H

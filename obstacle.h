@@ -5,10 +5,10 @@ class Obstacle
 public:
 
 	Obstacle();
-	Obstacle(int x_in, int y_in, int width_in, int height_in);
+	Obstacle(int x_in, int y_in, int width_in, int length_in);
 	
 	double x;
 	double y;
 	double width;
-	double height;
+	double length;
 }

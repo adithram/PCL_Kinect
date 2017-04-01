@@ -49,6 +49,8 @@ namespace BackgroundSubtract{
         obstacles_vector = extractAverages(cluster_clouds);
 
         //publish the vector
+        //temporarily write into the terminal
+        terminalWrite(obstacles_vector);
 
         // Slow down data rate
         this_thread::sleep_for(chrono::seconds(2)); 
