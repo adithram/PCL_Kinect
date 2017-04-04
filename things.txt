@@ -1,0 +1,1 @@
+target_link_libraries(obstacle_test ${PCL_COMMON_LIBRARIES} ${PCL_IO_LIBRARIES})

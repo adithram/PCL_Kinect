@@ -19,7 +19,7 @@
 #include <pcl/kdtree/kdtree_flann.h>
 #include <pcl/surface/mls.h>
 #include "pc_background_subtract.h"
-#include <"obstacle.h">
+
 
 
 using namespace std;

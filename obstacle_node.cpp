@@ -30,15 +30,15 @@ void depthImageCb(const sensor_msgs::ImageConstPtr& msg){
     return;
 }
 
-int main(int argc, char** argv){
-    ros::NodeHandle nh;
+// int main(int argc, char** argv){
+//     ros::NodeHandle nh;
 
-    image_transport::ImageTransport it;
-    image_transport::Subscriber image_sub;
+//     image_transport::ImageTransport it;
+//     image_transport::Subscriber image_sub;
 
-    // TODO: Fix path
-    image_sub = it.subscribe("/camera/depth", 1, &depthImageCb);
+//     // TODO: Fix path
+//     image_sub = it.subscribe("/camera/depth", 1, &depthImageCb);
 
 
 
-}
+// }

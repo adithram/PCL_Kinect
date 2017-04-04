@@ -7,9 +7,20 @@
 #include <stdio.h>   
 #include <stdlib.h> 
 #include <cmath>
+#include <pcl/ModelCoefficients.h>
+#include <pcl/filters/extract_indices.h>
+#include <pcl/filters/voxel_grid.h>
+#include <pcl/features/normal_3d.h>
+#include <pcl/kdtree/kdtree.h>
+#include <pcl/sample_consensus/method_types.h>
+#include <pcl/sample_consensus/model_types.h>
+#include <pcl/segmentation/sac_segmentation.h>
+#include <pcl/segmentation/extract_clusters.h>
+#include <pcl/kdtree/kdtree_flann.h>
+#include <pcl/surface/mls.h>
 
 #include "pc_background_subtract.h"
-#include <"obstacle.h">
+#include "obstacle.h"
 
 
 using namespace std;
@@ -78,7 +89,7 @@ namespace BackgroundSubtract{
 
   // function to smooth cloud to fill in depth uncertainties
   void smoothCloud(pcl::PointCloud<pcl::PointXYZ> &compare_cloud){
-    
+
     // Create a KD-Tree
     pcl::search::KdTree<pcl::PointXYZ>::Ptr tree (new pcl::search::KdTree<pcl::PointXYZ>);
 

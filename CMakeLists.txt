@@ -4,6 +4,6 @@ find_package(PCL 1.3 REQUIRED COMPONENTS common io)
 include_directories(${PCL_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
-add_executable(pc_background_subtract_test pc_background_subtract.cpp)
-target_link_libraries(pc_background_subtract_test ${PCL_COMMON_LIBRARIES} ${PCL_IO_LIBRARIES})
+add_executable(obstacle_test obstacleAvoid.cpp)
+target_link_libraries(obstacle_test ${PCL_LIBRARIES})
 

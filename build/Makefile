@@ -48,10 +48,10 @@ RM = /usr/local/Cellar/cmake/3.7.2/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/Users/adithram/Documents/Personal Projects/REST/REST 2017/PCL_Kinect"
+CMAKE_SOURCE_DIR = "/Users/adithram/Documents/Personal Projects/REST/2_2017/PCL_Kinect"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/Users/adithram/Documents/Personal Projects/REST/REST 2017/PCL_Kinect/build"
+CMAKE_BINARY_DIR = "/Users/adithram/Documents/Personal Projects/REST/2_2017/PCL_Kinect/build"
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/adithram/Documents/Personal Projects/REST/REST 2017/PCL_Kinect/build/CMakeFiles" "/Users/adithram/Documents/Personal Projects/REST/REST 2017/PCL_Kinect/build/CMakeFiles/progress.marks"
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/adithram/Documents/Personal Projects/REST/2_2017/PCL_Kinect/build/CMakeFiles" "/Users/adithram/Documents/Personal Projects/REST/2_2017/PCL_Kinect/build/CMakeFiles/progress.marks"
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/adithram/Documents/Personal Projects/REST/REST 2017/PCL_Kinect/build/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/adithram/Documents/Personal Projects/REST/2_2017/PCL_Kinect/build/CMakeFiles" 0
 .PHONY : all
 
 # The main clean target
@@ -111,44 +111,44 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named pc_background_subtract_test
+# Target rules for targets named obstacle_test
 
 # Build rule for target.
-pc_background_subtract_test: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 pc_background_subtract_test
-.PHONY : pc_background_subtract_test
+obstacle_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 obstacle_test
+.PHONY : obstacle_test
 
 # fast build rule for target.
-pc_background_subtract_test/fast:
-	$(MAKE) -f CMakeFiles/pc_background_subtract_test.dir/build.make CMakeFiles/pc_background_subtract_test.dir/build
-.PHONY : pc_background_subtract_test/fast
+obstacle_test/fast:
+	$(MAKE) -f CMakeFiles/obstacle_test.dir/build.make CMakeFiles/obstacle_test.dir/build
+.PHONY : obstacle_test/fast
 
-pc_background_subtract.o: pc_background_subtract.cpp.o
+obstacleAvoid.o: obstacleAvoid.cpp.o
 
-.PHONY : pc_background_subtract.o
+.PHONY : obstacleAvoid.o
 
 # target to build an object file
-pc_background_subtract.cpp.o:
-	$(MAKE) -f CMakeFiles/pc_background_subtract_test.dir/build.make CMakeFiles/pc_background_subtract_test.dir/pc_background_subtract.cpp.o
-.PHONY : pc_background_subtract.cpp.o
+obstacleAvoid.cpp.o:
+	$(MAKE) -f CMakeFiles/obstacle_test.dir/build.make CMakeFiles/obstacle_test.dir/obstacleAvoid.cpp.o
+.PHONY : obstacleAvoid.cpp.o
 
-pc_background_subtract.i: pc_background_subtract.cpp.i
+obstacleAvoid.i: obstacleAvoid.cpp.i
 
-.PHONY : pc_background_subtract.i
+.PHONY : obstacleAvoid.i
 
 # target to preprocess a source file
-pc_background_subtract.cpp.i:
-	$(MAKE) -f CMakeFiles/pc_background_subtract_test.dir/build.make CMakeFiles/pc_background_subtract_test.dir/pc_background_subtract.cpp.i
-.PHONY : pc_background_subtract.cpp.i
+obstacleAvoid.cpp.i:
+	$(MAKE) -f CMakeFiles/obstacle_test.dir/build.make CMakeFiles/obstacle_test.dir/obstacleAvoid.cpp.i
+.PHONY : obstacleAvoid.cpp.i
 
-pc_background_subtract.s: pc_background_subtract.cpp.s
+obstacleAvoid.s: obstacleAvoid.cpp.s
 
-.PHONY : pc_background_subtract.s
+.PHONY : obstacleAvoid.s
 
 # target to generate assembly for a file
-pc_background_subtract.cpp.s:
-	$(MAKE) -f CMakeFiles/pc_background_subtract_test.dir/build.make CMakeFiles/pc_background_subtract_test.dir/pc_background_subtract.cpp.s
-.PHONY : pc_background_subtract.cpp.s
+obstacleAvoid.cpp.s:
+	$(MAKE) -f CMakeFiles/obstacle_test.dir/build.make CMakeFiles/obstacle_test.dir/obstacleAvoid.cpp.s
+.PHONY : obstacleAvoid.cpp.s
 
 # Help Target
 help:
@@ -158,10 +158,10 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... pc_background_subtract_test"
-	@echo "... pc_background_subtract.o"
-	@echo "... pc_background_subtract.i"
-	@echo "... pc_background_subtract.s"
+	@echo "... obstacle_test"
+	@echo "... obstacleAvoid.o"
+	@echo "... obstacleAvoid.i"
+	@echo "... obstacleAvoid.s"
 .PHONY : help
 
 

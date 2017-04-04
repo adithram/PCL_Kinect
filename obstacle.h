@@ -11,4 +11,4 @@ public:
 	double y;
 	double width;
 	double length;
-}
+};
