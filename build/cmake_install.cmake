@@ -1,4 +1,4 @@
-# Install script for directory: /Users/adithram/Documents/Personal Projects/REST/2_2017/PCL_Kinect
+# Install script for directory: /Users/MaxGittelman/Google Drive/AllFiles/eecs/rest/PCL_Kinect
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -35,5 +35,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/adithram/Documents/Personal Projects/REST/2_2017/PCL_Kinect/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/MaxGittelman/Google Drive/AllFiles/eecs/rest/PCL_Kinect/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

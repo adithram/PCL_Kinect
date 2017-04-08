@@ -52,7 +52,7 @@ namespace BackgroundSubtract{
         smoothCloud(compare_cloud);
 
         // Extract clusters ; return vector containing cluster locations
-        vector< pcl::PointCloud<pcl::PointXYZ> * > cluster_clouds;
+        vector< pcl::PointCloud<pcl::PointXYZ>::Ptr > cluster_clouds;
         cluster_clouds = extractClustersFromCloud(compare_cloud);
 
         vector<Obstacle> obstacles_vector;

@@ -1,27 +1,4 @@
-#include <iostream>
-#include <pcl/io/pcd_io.h>
-#include <pcl/point_types.h>
-#include <chrono>
-#include <thread>
-#include <tuple>
-#include <stdio.h>   
-#include <stdlib.h> 
-#include <cmath>
-#include <pcl/ModelCoefficients.h>
-#include <pcl/filters/extract_indices.h>
-#include <pcl/filters/voxel_grid.h>
-#include <pcl/features/normal_3d.h>
-#include <pcl/kdtree/kdtree.h>
-#include <pcl/sample_consensus/method_types.h>
-#include <pcl/sample_consensus/model_types.h>
-#include <pcl/segmentation/sac_segmentation.h>
-#include <pcl/segmentation/extract_clusters.h>
-#include <pcl/kdtree/kdtree_flann.h>
-#include <pcl/surface/mls.h>
-
 #include "pc_background_subtract.h"
-#include "obstacle.h"
-
 
 using namespace std;
 
@@ -62,6 +39,7 @@ namespace BackgroundSubtract{
   // function to initialize random comparison cloud
   void initializeCompareCloud(pcl::PointCloud<pcl::PointXYZ> &base_cloud, pcl::PointCloud<pcl::PointXYZ> &compare_cloud){
 
+    int cols = 1;
     compare_cloud.width = 5;
     compare_cloud.height = 1;
     compare_cloud.is_dense = false;
@@ -102,7 +80,10 @@ namespace BackgroundSubtract{
     mls.setComputeNormals (true);
 
     // Set parameters
-    mls.setInputCloud (compare_cloud);
+
+    pcl::PointCloud<pcl::PointXYZ>::Ptr compare_cloud_ptr(&compare_cloud);
+
+    mls.setInputCloud (compare_cloud_ptr);
     mls.setPolynomialFit (true);
     mls.setSearchMethod (tree);
     //test this parameter
@@ -114,16 +95,18 @@ namespace BackgroundSubtract{
     //"if the normals and the original dimensions need to be in the same cloud, the fields have to be concatenated."
     // I think this is the way to add back in the calculated normals. Needs to be tested.
     // Possibly rewritten. 
-    compare_cloud = compare_cloud + mls_points;
+    //compare_cloud = compare_cloud + mls_points;
   }
 
   // function to group, extract clusters from an input point cloud
   // Returns vector of pointers to pointclouds, each representing a cluster
-  vector< pcl::PointCloud<pcl::PointXYZ> * > extractClustersFromCloud(pcl::PointCloud<pcl::PointXYZ> &compare_cloud){
+  vector< pcl::PointCloud<pcl::PointXYZ>::Ptr> extractClustersFromCloud(pcl::PointCloud<pcl::PointXYZ> &compare_cloud){
+
+    pcl::PointCloud<pcl::PointXYZ>::Ptr compare_cloud_ptr(&compare_cloud);
 
     //Initialize kdTree and feed compare cloud into the tree
     pcl::search::KdTree<pcl::PointXYZ>::Ptr tree (new pcl::search::KdTree<pcl::PointXYZ>);
-    tree->setInputCloud (compare_cloud);
+    tree->setInputCloud (compare_cloud_ptr);
 
     // Vector that contains the cluster indices
     vector<pcl::PointIndices> cluster_indices;
@@ -141,45 +124,37 @@ namespace BackgroundSubtract{
     ec.setMinClusterSize (100);
     ec.setMaxClusterSize (25000);
     ec.setSearchMethod (tree);
-    ec.setInputCloud (compare_cloud);
+    ec.setInputCloud (compare_cloud_ptr);
     ec.extract (cluster_indices);
 
-    int j = 0;
-    vector<pcl::PointIndices>::const_iterator it = cluster_indices.begin ()
-    for (it; it != cluster_indices.end (); ++it) {
-      pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_cluster (new pcl::PointCloud<pcl::PointXYZ>);
+    //Vector of pointers to point clouds. 
+    vector< pcl::PointCloud<pcl::PointXYZ>::Ptr > cloud_ptrs;
 
-      vector<int>::const_iterator pit = it->indices.begin ()
-      for (pit; pit != it->indices.end (); ++pit) {
-        cloud_cluster->points.push_back (compare_cloud->points[*pit]); //*
+    int j=0;
+    for (auto cluster_idx: cluster_indices) {
+      pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_cluster (new pcl::PointCloud<pcl::PointXYZ>());
+
+      for (auto idx: cluster_idx.indices) {
+        cloud_cluster->points.push_back(compare_cloud.points[idx]);
       }
-      cloud_cluster->width = cloud_cluster->points.size ();
+      cloud_cluster->width = cloud_cluster->points.size();
       cloud_cluster->height = 1;
       cloud_cluster->is_dense = true;
 
-      //Vector of pointers to point clouds. 
-      vector< pcl::PointCloud<pcl::PointXYZ> * > cluster_clouds;
-
-      // Writing values to a PCD file
-      // Return vector of point clouds (each representing cluster) ?
-      cout << "PointCloud representing the Cluster: " << cloud_cluster->points.size () << " data points." << endl;
-      stringstream ss;
-      ss << "cloud_cluster_" << j << ".pcd";
-      writer.write<pcl::PointXYZ> (ss.str (), *cloud_cluster, false); //*
       j++;
 
-      //Push cloud into vector
-      cluster_clouds.push_back(cloud_cluster);
-    } //Closing for loop iterating through cluster_indices
+      cloud_ptrs.push_back(cloud_cluster);
+    }
 
-    return cluster_clouds;
+    return cloud_ptrs;
 
   } // closing extract function
+  
 
   // function that averages values in pointcloud, returns vector of average location (x,y, length and width)
   // Should return average x, y, length, and width (approximate) of obstacles (the cluster)
   // values contained in obstacle object
-  vector<Obstacle> extractAverages(vector< pcl::PointCloud<pcl::PointXYZ> * > cluster_clouds){
+  vector<Obstacle> extractAverages(vector< pcl::PointCloud<pcl::PointXYZ>::Ptr > cluster_clouds){
     vector<Obstacle> obstacles_vector;
 
     //Iterate through all of the cluster clouds
