@@ -20,8 +20,6 @@
 #include <pcl/surface/mls.h>
 #include "pc_background_subtract.h"
 
-
-
 using namespace std;
 
  /*

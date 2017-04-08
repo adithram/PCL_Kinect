@@ -1,7 +1,8 @@
 // Obstacle object. Will be published. Contains x location, y location, approximate width, and approximate height
+#ifndef OBSTACLE_H
+#define OBSTACLE_H
 
-class Obstacle
-{
+class Obstacle {
 public:
 
 	Obstacle();
@@ -12,3 +13,5 @@ public:
 	double width;
 	double length;
 };
+
+#endif /* OBSTACLE_H */
