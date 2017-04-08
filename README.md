@@ -1,4 +1,5 @@
-# PCL_Kinect
+# Installs
+PCL
 
 # First build
 mkdir build
