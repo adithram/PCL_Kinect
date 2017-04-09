@@ -1,10 +1,1 @@
-cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
-project(MY_GRAND_PROJECT)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-find_package(PCL 1.3 REQUIRED COMPONENTS)
-include_directories(${PCL_INCLUDE_DIRS})
-link_directories(${PCL_LIBRARY_DIRS})
-add_definitions(${PCL_DEFINITIONS})
-add_executable(obstacle_avoid obstacleAvoid.cpp obstacle.cpp pc_background_subtract.cpp)
-target_link_libraries(obstacle_avoid ${PCL_LIBRARIES} ${PCL_COMMON_LIBRARIES} ${PCL_IO_LIBRARIES})
-
+/opt/ros/kinetic/share/catkin/cmake/toplevel.cmake

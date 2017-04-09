@@ -6,10 +6,10 @@
 namespace Segmentation{
 
 void segmentDepthImage(const cv::Mat& image, 
-  std::vector<pair<int, int>>& obstacles);
+  std::vector<std::pair<int, int>>& obstacles);
 
-    
 
 }; // namespace Segmentation
+
 
 #endif // SEGMENTATION_H

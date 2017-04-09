@@ -25,12 +25,12 @@ namespace BackgroundSubtract{
 
     // Write base_cloud to pcd file for testing
     pcl::io::savePCDFileASCII ("base_pcd.pcd", base_cloud);
-    cout << "Saved " << base_cloud.points.size () << " data points to base_pcd.pcd." << endl;
+    std::cout << "Saved " << base_cloud.points.size () << " data points to base_pcd.pcd." << std::endl;
 
     // Write base_cloud to terminal
-    cout << "x" << " " << "y" << " " << "z" << endl; // I know this could be one line, but this is easier to read for me. 
+    std::cout << "x" << " " << "y" << " " << "z" << std::endl; // I know this could be one line, but this is easier to read for me. 
     for (size_t i = 0; i < base_cloud.points.size (); ++i){
-      cout << " " << base_cloud.points[i].x << " " << base_cloud.points[i].y << " " << base_cloud.points[i].z << endl;
+      std::cout << " " << base_cloud.points[i].x << " " << base_cloud.points[i].y << " " << base_cloud.points[i].z << std::endl;
     }
   }
 
@@ -52,7 +52,7 @@ namespace BackgroundSubtract{
 
     // Write base_cloud to pcd file for testing
     pcl::io::savePCDFileASCII ("compare_cloud.pcd", compare_cloud);
-    cout << "Saved " << base_cloud.points.size () << " data points to compare_cloud.pcd." << endl;
+    std::cout << "Saved " << base_cloud.points.size () << " data points to compare_cloud.pcd." << std::endl;
   }
 
   // function that sets z of compare cloud to the abs difference of the two point cloud values
@@ -98,7 +98,7 @@ namespace BackgroundSubtract{
 
   // function to group, extract clusters from an input point cloud
   // Returns vector of pointers to pointclouds, each representing a cluster
-  vector< pcl::PointCloud<pcl::PointXYZ>::Ptr > extractClustersFromCloud(pcl::PointCloud<pcl::PointXYZ> &compare_cloud){
+  std::vector< pcl::PointCloud<pcl::PointXYZ>::Ptr > extractClustersFromCloud(pcl::PointCloud<pcl::PointXYZ> &compare_cloud){
 
     pcl::PointCloud<pcl::PointXYZ>::Ptr compare_cloud_ptr(&compare_cloud);
 
@@ -107,7 +107,7 @@ namespace BackgroundSubtract{
     tree->setInputCloud (compare_cloud_ptr);
 
     // Vector that contains the cluster indices
-    vector<pcl::PointIndices> cluster_indices;
+    std::vector<pcl::PointIndices> cluster_indices;
     pcl::EuclideanClusterExtraction<pcl::PointXYZ> ec;
 
     //How do we test these values?
@@ -126,7 +126,7 @@ namespace BackgroundSubtract{
     ec.extract (cluster_indices);
 
     //Vector of pointers to point clouds. 
-    vector< pcl::PointCloud<pcl::PointXYZ>::Ptr > cloud_ptrs;
+    std::vector< pcl::PointCloud<pcl::PointXYZ>::Ptr > cloud_ptrs;
 
     int j=0;
     for (auto cluster_idx: cluster_indices) {
@@ -152,8 +152,8 @@ namespace BackgroundSubtract{
   // function that averages values in pointcloud, returns vector of average location (x,y, length and width)
   // Should return average x, y, length, and width (approximate) of obstacles (the cluster)
   // values contained in obstacle object
-  vector<Obstacle> extractAverages(vector< pcl::PointCloud<pcl::PointXYZ>::Ptr >& cluster_clouds) {
-    vector<Obstacle> obstacles_vector;
+  std::vector<Obstacle> extractAverages(std::vector< pcl::PointCloud<pcl::PointXYZ>::Ptr >& cluster_clouds) {
+    std::vector<Obstacle> obstacles_vector;
 
     //Iterate through all of the cluster clouds
     for (auto current_cloud: cluster_clouds) {
@@ -204,7 +204,7 @@ namespace BackgroundSubtract{
   } //closing the averages function
 
   //Temperorary function that writes values to the terminal
-  void terminalWrite(vector<Obstacle> &obstacles_vector){
+  void terminalWrite(std::vector<Obstacle> &obstacles_vector){
     int count = 0;
     for(auto i: obstacles_vector){
       double x = i.x;
@@ -212,11 +212,12 @@ namespace BackgroundSubtract{
       double width = i.width;
       double length = i.length;
 
-      cout << "Obstacle number " << count << " located at (" << x << "," << y <<"), with width: " << width << " and length: " << length << endl; 
+      std::cout << "Obstacle number " << count << " located at (" << x << "," << y <<"), with width: " << width << " and length: " << length << std::endl; 
       count++;
     }
   }
 
 
 
-} // Closing namespace
+}; // namespace BackgroundSubtract
+

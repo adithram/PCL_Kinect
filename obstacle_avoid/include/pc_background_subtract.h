@@ -1,13 +1,12 @@
 #ifndef PC_BACKGROUND_SUBTRACT_H
 #define PC_BACKGROUND_SUBTRACT_H
 
-#include "obstacle.h"
+#include "Obstacle.h"
 #include <pcl/point_types.h>
 
 #include <iostream>
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
-#include <chrono>
 #include <thread>
 #include <tuple>
 #include <stdio.h>   
@@ -25,8 +24,6 @@
 #include <pcl/kdtree/kdtree_flann.h>
 #include <pcl/surface/mls.h>
 
-using namespace std;
-
 namespace BackgroundSubtract {
     
 // Function to randomly initialize base pointcloud
@@ -41,15 +38,15 @@ void compareClouds(pcl::PointCloud<pcl::PointXYZ> &base_cloud,
 
 void smoothCloud(pcl::PointCloud<pcl::PointXYZ> &compare_cloud);
 
-vector< pcl::PointCloud<pcl::PointXYZ>::Ptr > extractClustersFromCloud(pcl::PointCloud<pcl::PointXYZ> &compare_cloud);
+std::vector< pcl::PointCloud<pcl::PointXYZ>::Ptr > extractClustersFromCloud(pcl::PointCloud<pcl::PointXYZ> &compare_cloud);
 
 // function that averages values in pointcloud, returns vector of average location (x,y, length and width)
 // Should return average x, y, length, and width (approximate) of obstacles (the cluster)
 // values contained in obstacle object
-vector<Obstacle> extractAverages(vector< pcl::PointCloud<pcl::PointXYZ>::Ptr > &cluster_clouds);
+std::vector<Obstacle> extractAverages(std::vector< pcl::PointCloud<pcl::PointXYZ>::Ptr > &cluster_clouds);
 
 //Temperorary function that writes values to the terminal
-void terminalWrite(vector<Obstacle> &obstacles_vector);
+void terminalWrite(std::vector<Obstacle> &obstacles_vector);
 	
 
 } // namespace BackgroundSubtract
