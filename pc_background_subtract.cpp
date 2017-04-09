@@ -98,7 +98,7 @@ namespace BackgroundSubtract{
 
   // function to group, extract clusters from an input point cloud
   // Returns vector of pointers to pointclouds, each representing a cluster
-  vector< pcl::PointCloud<pcl::PointXYZ>::Ptr> extractClustersFromCloud(pcl::PointCloud<pcl::PointXYZ> &compare_cloud){
+  vector< pcl::PointCloud<pcl::PointXYZ>::Ptr > extractClustersFromCloud(pcl::PointCloud<pcl::PointXYZ> &compare_cloud){
 
     pcl::PointCloud<pcl::PointXYZ>::Ptr compare_cloud_ptr(&compare_cloud);
 
