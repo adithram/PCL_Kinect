@@ -15,7 +15,7 @@ namespace BackgroundSubtract{
   int main (int argc, char** argv){
     pcl::PointCloud<pcl::PointXYZ> base_cloud;
 
-    initiailzeBaseCloud(base_cloud);
+    initializeBaseCloud(base_cloud);
       
     
     while(1){

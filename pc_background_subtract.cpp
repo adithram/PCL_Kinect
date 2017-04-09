@@ -5,7 +5,7 @@ using namespace std;
 namespace BackgroundSubtract{ 
 
   // Function to randomly initialize base pointcloud
-  void initiailzeBaseCloud(pcl::PointCloud<pcl::PointXYZ> &base_cloud){
+  void initializeBaseCloud(pcl::PointCloud<pcl::PointXYZ> &base_cloud){
     // Faking point cloud temporarily. 
     // Fill in the cloud data
     base_cloud.width = 5;
