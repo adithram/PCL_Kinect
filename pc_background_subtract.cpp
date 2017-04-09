@@ -1,11 +1,9 @@
 #include "pc_background_subtract.h"
 
-using namespace std;
-
 namespace BackgroundSubtract{ 
 
   // Function to randomly initialize base pointcloud
-  void initiailzeBaseCloud(pcl::PointCloud<pcl::PointXYZ> &base_cloud){
+  void initializeBaseCloud(pcl::PointCloud<pcl::PointXYZ> &base_cloud){
     // Faking point cloud temporarily. 
     // Fill in the cloud data
     base_cloud.width = 5;
@@ -154,7 +152,7 @@ namespace BackgroundSubtract{
   // function that averages values in pointcloud, returns vector of average location (x,y, length and width)
   // Should return average x, y, length, and width (approximate) of obstacles (the cluster)
   // values contained in obstacle object
-  vector<Obstacle> extractAverages(vector< pcl::PointCloud<pcl::PointXYZ>::Ptr > cluster_clouds){
+  vector<Obstacle> extractAverages(vector< pcl::PointCloud<pcl::PointXYZ>::Ptr >& cluster_clouds) {
     vector<Obstacle> obstacles_vector;
 
     //Iterate through all of the cluster clouds

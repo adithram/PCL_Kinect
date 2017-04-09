@@ -1,6 +1,7 @@
 #include "pc_background_subtract.h"
 
 using namespace std;
+using namespace BackgroundSubtract;
 
  /*
 
@@ -10,12 +11,10 @@ using namespace std;
  // Extract clusters
   
  */
-namespace BackgroundSubtract{ 
-
-  int main (int argc, char** argv){
+int main(int argc, char** argv) {
     pcl::PointCloud<pcl::PointXYZ> base_cloud;
 
-    initiailzeBaseCloud(base_cloud);
+    initializeBaseCloud(base_cloud);
       
     
     while(1){
@@ -47,7 +46,6 @@ namespace BackgroundSubtract{
     }
     
     return (0);
-  }
+}
 
-} // namespace BackgroundSubtract
 
