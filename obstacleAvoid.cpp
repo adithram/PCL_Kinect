@@ -5,10 +5,9 @@ using namespace BackgroundSubtract;
 
  /*
 
- // TODO:
- // Grabber
+  // TODO:
+ // Grabber - Use depth_image_proc from ROS and use a depth image to point cloud conversion
  // Kinect Error Modelling
- // Extract clusters
   
  */
 int main(int argc, char** argv) {
