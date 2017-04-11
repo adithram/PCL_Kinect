@@ -66,7 +66,7 @@ int main(int argc, char** argv) {
     initializeBaseCloud(pcp_instance.base_cloud);
 
     ros::Subscriber sub;
-    sub = nh.subscribe("points", 1, &PointCloudProcessing::pointCloudCb, &pcp_instance, this);
+    sub = nh.subscribe("points", 1, &PointCloudProcessing::pointCloudCb, &pcp_instance);
     
     ros::spin();
     
