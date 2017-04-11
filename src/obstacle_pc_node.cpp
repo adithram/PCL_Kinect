@@ -58,13 +58,16 @@ int main(int argc, char** argv) {
 
     ros::init(argc, argv, "obstacle_pc_node");
     ros::NodeHandle nh;
+ 
+    // instantiate class
+    PointCloudProcessing pcp_instance;
 
     // pcl::PointCloud<pcl::PointXYZ> base_cloud;
 
     initializeBaseCloud(pc.base_cloud);
 
     ros::Subscriber sub;
-    sub = nh.subscribe("points", 1, pointCloudCb);
+    sub = nh.subscribe("points", 1, &PointCloudProcessing::pointCloudCb, &pcp_instance);
     
     ros::spin();
     
