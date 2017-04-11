@@ -54,7 +54,6 @@ void PointCloudProcessing::pointCloudCb(const sensor_msgs::PointCloud2& pc_msg){
 
 int main(int argc, char** argv) {
 
-    PointCloudProcessing pc();
 
     ros::init(argc, argv, "obstacle_pc_node");
     ros::NodeHandle nh;
@@ -64,10 +63,10 @@ int main(int argc, char** argv) {
 
     // pcl::PointCloud<pcl::PointXYZ> base_cloud;
 
-    initializeBaseCloud(pc.base_cloud);
+    initializeBaseCloud(pcp_instance.base_cloud);
 
     ros::Subscriber sub;
-    sub = nh.subscribe("points", 1, &PointCloudProcessing::pointCloudCb, &pcp_instance);
+    sub = nh.subscribe("points", 1, &PointCloudProcessing::pointCloudCb, &pcp_instance, this);
     
     ros::spin();
     
