@@ -1,0 +1,4 @@
+<launch>
+    <node name="converter_node" type="converter_node" pkg="obstacle_avoid" output="screen" />
+    <node name="obstacle_pc_node" type="obstacle_pc_node" pkg="obstacle_avoid" output="screen" />
+</launch>
