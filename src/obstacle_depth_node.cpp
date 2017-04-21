@@ -6,17 +6,40 @@
 
 #include "segmentation.h"
 
+namespace enc = sensor_msgs::image_encodings;
+
 bool GLOBAL_BOOL = false;
+
 
 void depthImageCb(const sensor_msgs::ImageConstPtr& msg){
     if (GLOBAL_BOOL) return;
-    // TODO: Subtract the image from the background image -- make this into a class
+
+    // // Allocate new Image message
+    // sensor_msgs::ImagePtr depth_msg( new sensor_msgs::Image );
+    // depth_msg->header   = msg->header;
+    // depth_msg->encoding = enc::TYPE_32FC1;
+    // depth_msg->height   = msg->height;
+    // depth_msg->width    = msg->width;
+    // depth_msg->step     = msg->width * sizeof (float);
+    // depth_msg->data.resize( depth_msg->height * depth_msg->step);
+
+    // float bad_point = std::numeric_limits<float>::quiet_NaN ();
+
+    // // Fill in the depth image data, converting mm to m
+    // const uint16_t* raw_data = reinterpret_cast<const uint16_t*>(&msg->data[0]);
+    // float* depth_data = reinterpret_cast<float*>(&depth_msg->data[0]);
+
+    // for (unsigned index = 0; index < depth_msg->height * depth_msg->width; ++index){
+    //     uint16_t raw = raw_data[index];
+    //     depth_data[index] = (raw == 0) ? bad_point : (float)raw * 0.001f;
+    // }
+
+
+    // // TODO: Subtract the image from the background image -- make this into a class
     ROS_INFO("Inside depthImageCb!");
-
-    cv_bridge::CvImageConstPtr cv_ptr;
-
+    cv_bridge::CvImagePtr depthImg;
     try{
-        cv_ptr =  cv_bridge::toCvShare(msg);
+        depthImg = cv_bridge::toCvCopy(msg , sensor_msgs::image_encodings::TYPE_8UC1);
     }
 
     catch (cv_bridge::Exception& e){
@@ -27,7 +50,10 @@ void depthImageCb(const sensor_msgs::ImageConstPtr& msg){
     // TODO: Make it a struct object -- x,y, width 
     std::vector<std::pair<int, int>> obstacles;
 
-    Segmentation::segmentDepthImage(cv_ptr->image, obstacles);
+    //Normalize the pixel value
+    cv::normalize(depthImg->image, depthImg->image, 0, 255, cv::NORM_MINMAX, CV_8UC1 );
+
+    segmentation::segmentDepthImage(depthImg->image, obstacles);
     GLOBAL_BOOL = true;
     return;
 }
