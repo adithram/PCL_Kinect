@@ -44,7 +44,7 @@ void ObstacleDepthNode::bgMode(cv::Mat& depth_img){
 
 void ObstacleDepthNode::obsDetect(cv::Mat& depth_img){
     // TODO: Make it a struct object -- x,y, width 
-    std::vector<std::pair<int, int>> obstacles;
+    std::vector<Obstacle> obstacles;
     ROS_INFO("Obstacle Detect callback activated");
     cv::absdiff(depth_img, bg_img_, depth_img);
     segmentation::segmentDepthImage(depth_img, obstacles);

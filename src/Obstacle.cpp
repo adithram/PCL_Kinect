@@ -6,14 +6,14 @@ Obstacle::Obstacle(){
     x = -1;
     y = -1;
     width = -1;
-    length = -1;
+    height = -1;
 }
 
-Obstacle::Obstacle(double x_in, double y_in, double average_z_in, double width_in, 
-                            double length_in){
+Obstacle::Obstacle(int x_in, int y_in, double average_z_in, int width_in, 
+                            int height_in){
     x = x_in;
     y = y_in;
              average_z = average_z_in;
     width = width_in;
-    length = length_in;
+    height = height_in;
 }
