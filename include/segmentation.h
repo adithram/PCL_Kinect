@@ -3,7 +3,7 @@
 
 #include <opencv2/opencv.hpp>
 
-namespace Segmentation{
+namespace segmentation{
 
 void segmentDepthImage(const cv::Mat& image, 
   std::vector<std::pair<int, int>>& obstacles);

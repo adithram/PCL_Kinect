@@ -6,10 +6,12 @@ class Obstacle {
 public:
 
 	Obstacle();
-	Obstacle(int x_in, int y_in, int width_in, int length_in);
+	Obstacle(double x_in, double y_in, double average_z_in, double width_in, 
+                            double length_in);
 	
 	double x;
 	double y;
+             double average_z;
 	double width;
 	double length;
 };

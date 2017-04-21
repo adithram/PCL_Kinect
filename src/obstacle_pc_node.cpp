@@ -14,10 +14,18 @@ using namespace BackgroundSubtract;
   
  */
 
-void pointCloudCb(const sensor_msgs::PointCloud2& pc_msg){
+//Adding point cloud class so that base_cloud is a member variable
+class PointCloudProcessing {
+public:
+    void pointCloudCb(const sensor_msgs::PointCloud2& pc_msg);
+    pcl::PointCloud<pcl::PointXYZ> base_cloud;
+
+};
+
+void PointCloudProcessing::pointCloudCb(const sensor_msgs::PointCloud2& pc_msg){
     ROS_INFO("Inside PC Callback!");
 
-    /*
+    
     pcl::PointCloud<pcl::PointXYZ> compare_cloud; 
 
     initializeCompareCloud(base_cloud, compare_cloud);
@@ -40,20 +48,25 @@ void pointCloudCb(const sensor_msgs::PointCloud2& pc_msg){
     terminalWrite(obstacles_vector);
 
     ros::Duration(0.5).sleep();
-    */
+    
 }
 
 
 int main(int argc, char** argv) {
+
+
     ros::init(argc, argv, "obstacle_pc_node");
     ros::NodeHandle nh;
+ 
+    // instantiate class
+    PointCloudProcessing pcp_instance;
 
-    pcl::PointCloud<pcl::PointXYZ> base_cloud;
+    // pcl::PointCloud<pcl::PointXYZ> base_cloud;
 
-    initializeBaseCloud(base_cloud);
+    initializeBaseCloud(pcp_instance.base_cloud);
 
     ros::Subscriber sub;
-    sub = nh.subscribe("points", 1, pointCloudCb);
+    sub = nh.subscribe("points", 1, &PointCloudProcessing::pointCloudCb, &pcp_instance);
     
     ros::spin();
     
