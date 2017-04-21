@@ -2,13 +2,14 @@
 #include <iostream>
 
 #include "segmentation.h"
+#include "Obstacle.h"
 
 using namespace cv;
 
 namespace segmentation{
 
 void segmentDepthImage(const Mat& src, 
-  std::vector<std::pair<int, int>>& obstacles){
+  std::vector<Obstacle>& obstacles){
 
     // Bag file testing
 
@@ -88,9 +89,34 @@ void segmentDepthImage(const Mat& src,
     for( int i = 0; i< contours.size(); i++ )
      {
        if (boundRect[i].area() < 400 || boundRect[i].area() > 200*200) continue;
+
+       Obstacle obs;
+       obs.x = boundRect[i].x;
+       obs.y = boundRect[i].y;
+       obs.height = boundRect[i].height;
+       obs.width = boundRect[i].width;
+
+        // Compute average depth, taking into subtracted values
+       // TODO: Won't this be affect by normalize call?
+
+       int total_depth = 0;
+
+       for (int i = 0; i < obs.width; ++i){
+            for (int j = 0; j < obs.height; ++j){
+                total_depth += src.at<uint8_t>(i + obs.x, j + obs.y) + bg_img_.at<uint8_t>(i + obs.x, j + obs.y);
+            }
+       }
+
+       obs.average_z = total_depth / (float)(obs.height * obs.width);
+
+       obstacles.push_back(obs);
+
+       // Showing bounding rectangles
+       /*
        Scalar color = Scalar( 255, 0, 0 );
        drawContours( drawing, contours_poly, i, color, 1, 8, std::vector<Vec4i>(), 0, Point() );
        rectangle( drawing, boundRect[i].tl(), boundRect[i].br(), color, 2, 8, 0 );
+       */
      }
 
      imshow( "Contours", drawing );
@@ -118,7 +144,7 @@ void segmentDepthImage(const Mat& src,
      // Add back bg to get actual depth
 
 
-    waitKey(0);
+    //waitKey(0);
 }
 
 }; // namespace Segmentation
