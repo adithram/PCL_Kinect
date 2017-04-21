@@ -3,17 +3,15 @@
 #include "Obstacle.h"
 
 Obstacle::Obstacle(){
-    x = -1;
-    y = -1;
-    width = -1;
-    height = -1;
+	x = -1;
+	y = -1;
+	width = -1;
+	length = -1;
 }
 
-Obstacle::Obstacle(int x_in, int y_in, double average_z_in, int width_in, 
-                            int height_in){
-    x = x_in;
-    y = y_in;
-             average_z = average_z_in;
-    width = width_in;
-    height = height_in;
+Obstacle::Obstacle(int x_in, int y_in, int width_in, int length_in){
+	x = x_in;
+	y = y_in;
+	width = width_in;
+	length = length_in;
 }

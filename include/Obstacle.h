@@ -6,14 +6,12 @@ class Obstacle {
 public:
 
 	Obstacle();
-	Obstacle(int x_in, int y_in, double average_z_in, int width_in, 
-                            int height_in);
+	Obstacle(int x_in, int y_in, int width_in, int length_in);
 	
-	int x;
-	int y;
-             double average_z;
-	int width;
-	int height;
+	double x;
+	double y;
+	double width;
+	double length;
 };
 
 #endif /* OBSTACLE_H */

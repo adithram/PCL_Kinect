@@ -14,7 +14,6 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   sensor_msgs
   image_geometry
-  dynamic_reconfigure
 )
 
 ## System dependencies are found with CMake's conventions
@@ -27,11 +26,6 @@ add_definitions(${PCL_DEFINITIONS})
     
 # Find OpenCV components
 find_package( OpenCV REQUIRED )
-
-# Dynamic Reconfigure
-generate_dynamic_reconfigure_options(
-  cfg/ObstacleAvoid.cfg
-)
 
 
 ###################################
@@ -59,7 +53,6 @@ catkin_package(
 # include_directories(include)
 include_directories(
   include
-  cfg
   ${catkin_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
   ${PCL_INCLUDE_DIRS}
@@ -70,9 +63,6 @@ include_directories(
 # Declaring obstacle depth node, linking libraries
 add_executable(obstacle_depth_node src/obstacle_depth_node.cpp src/segmentation.cpp)
 
-# Add Dynamic Reconfigure
-add_dependencies(obstacle_depth_node ${PROJECT_NAME}_gencfg)
-
 target_link_libraries(obstacle_depth_node
   ${catkin_LIBRARIES}
   ${OpenCV_LIBRARIES}
@@ -80,13 +70,13 @@ target_link_libraries(obstacle_depth_node
 )
 
 # declaring pure point cloud node
-#add_executable(obstacle_pc_node src/obstacle_pc_node.cpp src/pc_background_subtract.cpp src/Obstacle.cpp)
+add_executable(obstacle_pc_node src/obstacle_pc_node.cpp src/pc_background_subtract.cpp src/Obstacle.cpp)
 
-#target_link_libraries(obstacle_pc_node
-#  ${catkin_LIBRARIES}
-#  ${OpenCV_LIBRARIES}
-#  ${PCL_LIBRARIES}
-#)
+target_link_libraries(obstacle_pc_node
+  ${catkin_LIBRARIES}
+  ${OpenCV_LIBRARIES}
+  ${PCL_LIBRARIES}
+)
 
 # declaring converter node
 add_executable(converter_node src/converter_node.cpp)
