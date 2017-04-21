@@ -10,16 +10,17 @@ namespace segmentation{
 void segmentDepthImage(const Mat& src, 
   std::vector<std::pair<int, int>>& obstacles){
 
+    // Bag file testing
 
+    // Mat new_src = imread("/home/bhairav/Documents/Projects/PCL_Kinect/data/clear.png");
+    // Mat obs = imread("/home/bhairav/Documents/Projects/PCL_Kinect/data/obstacle.png");
+    // absdiff(new_src, obs, new_src);
+    // cvtColor(new_src, new_src, CV_RGB2GRAY);
 
+    // End Bag file testing
 
-    Mat new_src = imread("/home/bhairav/Documents/Projects/PCL_Kinect/data/clear.png");
-    Mat obs = imread("/home/bhairav/Documents/Projects/PCL_Kinect/data/obstacle.png");
-
-    absdiff(new_src, obs, new_src);
-
-    cvtColor(new_src, new_src, CV_RGB2GRAY);
-
+    Mat new_src = src.clone();
+  
     imshow("original2", new_src);
 
     // Create binary image from source image
@@ -44,13 +45,8 @@ void segmentDepthImage(const Mat& src,
     Mat kernel = (Mat_<float>(3,3) <<
             1,  1, 1,
             1, -8, 1,
-            1,  1, 1); // an approximation of second derivative, a quite strong kernel
-    // do the laplacian filtering as it is
-    // well, we need to convert everything in something more deeper then CV_8U
-    // because the kernel has some negative values,
-    // and we can expect in general to have a Laplacian image with negative values
-    // BUT a 8bits unsigned int (the one we are working with) can contain values from 0 to 255
-    // so the possible negative number will be truncated
+            1,  1, 1); 
+
     Mat imgLaplacian;
     Mat sharp = bw2; // copy source image to another temporary one
     filter2D(sharp, imgLaplacian, CV_32F, kernel);
@@ -91,7 +87,7 @@ void segmentDepthImage(const Mat& src,
     Mat drawing = Mat::zeros( imgResult.size(), CV_8UC3 );
     for( int i = 0; i< contours.size(); i++ )
      {
-       if (boundRect[i].area() < 400) continue;
+       if (boundRect[i].area() < 400 || boundRect[i].area() > 200*200) continue;
        Scalar color = Scalar( 255, 0, 0 );
        drawContours( drawing, contours_poly, i, color, 1, 8, std::vector<Vec4i>(), 0, Point() );
        rectangle( drawing, boundRect[i].tl(), boundRect[i].br(), color, 2, 8, 0 );
@@ -115,33 +111,15 @@ void segmentDepthImage(const Mat& src,
     // drawKeypoints(imgResult, myBlobs, imgResult);
     // imshow("Blobs", imgResult);
 
+     // End Blob Detection
+
+
+     // TODO: Bounding boxes into Obstacle objects
+     // Add back bg to get actual depth
+
+
     waitKey(0);
 }
 
 }; // namespace Segmentation
 
-/*
- cv::Mat grayscaleMat;
-
-    //TODO: Very inefficient
-    grayscaleMat = image.clone();
-    
-    grayscaleMat.convertTo(grayscaleMat, CV_8U);
-
-    cv::Mat binaryMat(grayscaleMat.size(), grayscaleMat.type());
-
-    cv::threshold(grayscaleMat, binaryMat, 40, 255, CV_THRESH_BINARY | CV_THRESH_OTSU);    
-
-    // Dilate a bit the dist image
-    cv::Mat kernel1 = cv::Mat::ones(3, 3, CV_8UC1);
-    dilate(binaryMat, binaryMat, kernel1);
-
-    // Find total markers
-    std::std::vector< std::std::vector<cv::Point> > contours;
-    cv::findContours(binaryMat, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
-
-    cv::imshow("binary", binaryMat);
-
-    cv::waitKey(0);
-
-*/
