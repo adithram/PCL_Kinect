@@ -2,11 +2,12 @@
 #define SEGMENTATION_H
 
 #include <opencv2/opencv.hpp>
+#include "Obstacle.h"
 
-namespace Segmentation{
+namespace segmentation{
 
 void segmentDepthImage(const cv::Mat& image, 
-  std::vector<std::pair<int, int>>& obstacles);
+  std::vector<Obstacle>& obstacles);
 
 
 }; // namespace Segmentation
