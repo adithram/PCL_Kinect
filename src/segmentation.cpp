@@ -22,7 +22,7 @@ void segmentDepthImage(const Mat& src, const Mat& bg_img_,
 
     Mat new_src = src.clone();
   
-    imshow("original2", new_src);
+    // imshow("original2", new_src);
 
     // Create binary image from source image
     Mat bw = new_src.clone();
@@ -30,7 +30,7 @@ void segmentDepthImage(const Mat& src, const Mat& bg_img_,
 
     inRange(bw, Scalar(10), Scalar(160), bw);
 
-    imshow("BeforeW", bw2);
+    // imshow("BeforeW", bw2);
 
     for  (int i = 0; i < bw.rows; ++i){
         for (int j = 0; j < bw.cols; ++j){
@@ -40,7 +40,7 @@ void segmentDepthImage(const Mat& src, const Mat& bg_img_,
         }
     }
 
-    imshow("Binary Image", bw2);
+    // imshow("Binary Image", bw2);
 
     // Create a kernel that we will use for accuting/sharpening our image
     Mat kernel = (Mat_<float>(3,3) <<
@@ -57,7 +57,7 @@ void segmentDepthImage(const Mat& src, const Mat& bg_img_,
     imgResult.convertTo(imgResult, CV_8UC3);
     imgLaplacian.convertTo(imgLaplacian, CV_8UC3);
     // imshow( "Laplace Filtered Image", imgLaplacian );
-    imshow( "New Sharped Image", imgResult );
+    // imshow( "New Sharped Image", imgResult );
 
     threshold(imgResult, imgResult, 15, 255, CV_THRESH_BINARY);
 
@@ -119,7 +119,7 @@ void segmentDepthImage(const Mat& src, const Mat& bg_img_,
        */
      }
 
-     imshow( "Contours", drawing );
+    // imshow( "Contours", drawing );
 
     // Blob Detection
 
