@@ -6,7 +6,7 @@
 
 namespace segmentation{
 
-void segmentDepthImage(const cv::Mat& image, 
+void segmentDepthImage(const cv::Mat& image, const cv::Mat& bg_img_,
   std::vector<Obstacle>& obstacles);
 
 

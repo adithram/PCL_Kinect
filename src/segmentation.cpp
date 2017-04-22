@@ -8,7 +8,7 @@ using namespace cv;
 
 namespace segmentation{
 
-void segmentDepthImage(const Mat& src, 
+void segmentDepthImage(const Mat& src, const Mat& bg_img_,
   std::vector<Obstacle>& obstacles){
 
     // Bag file testing

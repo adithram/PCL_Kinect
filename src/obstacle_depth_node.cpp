@@ -47,7 +47,7 @@ void ObstacleDepthNode::obsDetect(cv::Mat& depth_img){
     std::vector<Obstacle> obstacles;
     ROS_INFO("Obstacle Detect callback activated");
     cv::absdiff(depth_img, bg_img_, depth_img);
-    segmentation::segmentDepthImage(depth_img, obstacles);
+    segmentation::segmentDepthImage(depth_img, bg_img_, obstacles);
     return;
 }
 

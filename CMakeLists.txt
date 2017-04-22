@@ -68,7 +68,7 @@ include_directories(
 ## Declare a C++ executable
 
 # Declaring obstacle depth node, linking libraries
-add_executable(obstacle_depth_node src/obstacle_depth_node.cpp src/segmentation.cpp)
+add_executable(obstacle_depth_node src/obstacle_depth_node.cpp src/segmentation.cpp src/Obstacle.cpp)
 
 # Add Dynamic Reconfigure
 add_dependencies(obstacle_depth_node ${PROJECT_NAME}_gencfg)
