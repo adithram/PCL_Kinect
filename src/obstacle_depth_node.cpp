@@ -50,6 +50,9 @@ void ObstacleDepthNode::obsDetect(cv::Mat& depth_img){
     segmentation::segmentDepthImage(depth_img, bg_img_, obstacles);
 
     ROS_INFO("Found %i obstacles", (int)obstacles.size());
+
+    // 1 Hz update
+    ros::Duration(1).sleep();
     return;
 }
 
