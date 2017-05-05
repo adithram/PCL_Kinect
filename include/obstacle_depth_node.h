@@ -16,7 +16,7 @@ public:
     ObstacleDepthNode();
     void bgMode(cv::Mat& depth_img);
     void obsDetect(cv::Mat& depth_img);
-    void dynReconfigureCb(obstacle_avoid::ObstacleAvoidConfig &config, uint32_t level);
+    void dynReconfigureCb(rover_navigation::ObstacleAvoidConfig &config, uint32_t level);
     void depthImageCb(const sensor_msgs::ImageConstPtr& msg);
     void run();
 

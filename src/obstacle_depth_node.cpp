@@ -5,7 +5,7 @@
 #include <sensor_msgs/image_encodings.h>
 
 #include <dynamic_reconfigure/server.h>
-#include <obstacle_avoid/ObstacleAvoidConfig.h>
+#include <rover_navigation/ObstacleAvoidConfig.h>
 
 #include "segmentation.h"
 #include "obstacle_depth_node.h"
@@ -50,23 +50,37 @@ void ObstacleDepthNode::obsDetect(cv::Mat& depth_img){
     cv::absdiff(depth_img, bg_img_, depth_img);
     segmentation::segmentDepthImage(depth_img, bg_img_, obstacles);
 
-    obstacle_vector_size = (int)obstacles.size()
+    int obstacle_vector_size = (int)obstacles.size();
 
     ROS_INFO("Found %i obstacles", obstacle_vector_size);
 
     ros::NodeHandle nh;
     
-    Obstacle obstacle_array[obstacle_vector_size];
-    std::copy(obstacles.begin(), obstacles.end(), obstacle_array);
-    
-    ros::Publisher obstacle_pub = nh.advertise<rover_navigation::ObstaclesMsg>("Obstacles", obstacle_array, obstacle_vector_size);
+    rover_navigation::SquareObstacle square_obstacle;
+    rover_navigation::ObstaclesMsg message_object_to_send;
+
+
+    for (int i = 0; i < obstacle_vector_size; i++){
+        square_obstacle.x = obstacles[i].x;
+        square_obstacle.y = obstacles[i].y;
+        square_obstacle.average_z = obstacles[i].average_z;
+        square_obstacle.width = obstacles[i].width;
+        square_obstacle.height = obstacles[i].height;
+        message_object_to_send.squares.push_back(square_obstacle);
+
+    }
+
+    message_object_to_send.size = obstacle_vector_size;
+
+    ros::Publisher obstacle_pub = nh.advertise<rover_navigation::ObstaclesMsg>("Obstacles", 1);
+    obstacle_pub.publish(message_object_to_send);
 
     // 1 Hz update
     ros::Duration(1).sleep();
     return;
 }
 
-void ObstacleDepthNode::dynReconfigureCb(obstacle_avoid::ObstacleAvoidConfig &config, uint32_t level) {
+void ObstacleDepthNode::dynReconfigureCb(rover_navigation::ObstacleAvoidConfig &config, uint32_t level) {
     if (config.is_obs_avoid_mode_){
         // Signal came in
         is_obs_avoid_mode_ = true;
@@ -117,8 +131,8 @@ void ObstacleDepthNode::depthImageCb(const sensor_msgs::ImageConstPtr& msg){
 
 void ObstacleDepthNode::run(){
     // Dynamic Reconfigure setup
-    dynamic_reconfigure::Server<obstacle_avoid::ObstacleAvoidConfig> server;
-    dynamic_reconfigure::Server<obstacle_avoid::ObstacleAvoidConfig>::CallbackType f;
+    dynamic_reconfigure::Server<rover_navigation::ObstacleAvoidConfig> server;
+    dynamic_reconfigure::Server<rover_navigation::ObstacleAvoidConfig>::CallbackType f;
 
     f = boost::bind(&ObstacleDepthNode::dynReconfigureCb, this, _1, _2);
     server.setCallback(f);
