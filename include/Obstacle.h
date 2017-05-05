@@ -9,7 +9,7 @@ public:
                     int height_in);
     int x;
     int y;
-     double average_z;
+    double average_z;
     int width;
     int height;
 };

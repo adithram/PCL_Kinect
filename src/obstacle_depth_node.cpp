@@ -10,6 +10,7 @@
 #include "segmentation.h"
 #include "obstacle_depth_node.h"
 #include "Obstacle.h"
+#include "rover_navigation/ObstaclesMsg.h"
 
 namespace enc = sensor_msgs::image_encodings;
 
@@ -49,7 +50,16 @@ void ObstacleDepthNode::obsDetect(cv::Mat& depth_img){
     cv::absdiff(depth_img, bg_img_, depth_img);
     segmentation::segmentDepthImage(depth_img, bg_img_, obstacles);
 
-    ROS_INFO("Found %i obstacles", (int)obstacles.size());
+    obstacle_vector_size = (int)obstacles.size()
+
+    ROS_INFO("Found %i obstacles", obstacle_vector_size);
+
+    ros::NodeHandle nh;
+    
+    Obstacle obstacle_array[obstacle_vector_size];
+    std::copy(obstacles.begin(), obstacles.end(), obstacle_array);
+    
+    ros::Publisher obstacle_pub = nh.advertise<rover_navigation::ObstaclesMsg>("Obstacles", obstacle_array, obstacle_vector_size);
 
     // 1 Hz update
     ros::Duration(1).sleep();
