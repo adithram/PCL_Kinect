@@ -48,6 +48,8 @@ void ObstacleDepthNode::obsDetect(cv::Mat& depth_img){
     std::vector<Obstacle> obstacles;
     ROS_INFO("Obstacle Detect callback activated");
     cv::absdiff(depth_img, bg_img_, depth_img);
+    ROS_INFO("abd diff calculated");
+
     segmentation::segmentDepthImage(depth_img, bg_img_, obstacles);
 
     int obstacle_vector_size = (int)obstacles.size();
@@ -89,6 +91,10 @@ void ObstacleDepthNode::dynReconfigureCb(rover_navigation::ObstacleAvoidConfig &
         bg_img_ = bg_img_ / bg_img_count_;
         bg_img_.convertTo(bg_img_, CV_8UC1);
         ROS_INFO("Reaveraged background image");
+      
+        // snaps the dynamic reconfigure parameter back to false
+        // makes testing a bit easier / less frustrating
+        config.is_obs_avoid_mode_ = false;
     }
 
     else{
@@ -142,7 +148,7 @@ void ObstacleDepthNode::run(){
     image_transport::ImageTransport it(nh);
     image_transport::Subscriber image_sub;
 
-    image_sub = it.subscribe("/camera/depth_registered/image_raw", 1, &ObstacleDepthNode::depthImageCb, this);
+    image_sub = it.subscribe("/camera/depth/image_raw", 1, &ObstacleDepthNode::depthImageCb, this);
 
     ROS_INFO("Fully initialized obstacle_depth_node, starting");
     
